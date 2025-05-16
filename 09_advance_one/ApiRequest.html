@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body style="background-color: #212121; color:aliceblue">
+    <ol>
+        <li>0	UNSENT	Client has been created. open() not called yet.</li>
+        <li>1	OPENED	open() has been called.</li>
+        <li>2	HEADERS_RECEIVED	send() has been called, and headers and status are available.</li>
+        <li>3	LOADING	Downloading; responseText holds partial data.</li>
+        <li>4	DONE	The operation is complete.</li>
+    </ol>
+
+    <div id="container" style="width: 450px; height: auto; display: flex; flex-direction: column; justify-content: start; align-items: center; padding: 25px;">
+        <div><img id="image"></div>
+        <div id="followers">Followers : </div>
+    </div>
+
+</body>
+<script>
+    const requestUrl = 'https://api.github.com/users/hiteshchoudhary'
+    console.log("got the api");
+    
+    const xhr = new XMLHttpRequest();
+    console.log("object created");
+    xhr.open('GET', requestUrl)
+    console.log("request sent");
+    xhr.onreadystatechange = function() {
+        console.log(xhr.readyState);
+        if(xhr.readyState === 4){
+            const data = JSON.parse(this.responseText);
+            console.log(typeof data);
+            const apiFollowers = data.followers;
+            console.log(data.avatar_url);
+            const apiImage = data.avatar_url;
+            const image = document.getElementById("image").setAttribute("src", apiImage);
+            const followers = document.getElementById("followers");
+            followers.innerHTML += apiFollowers;
+
+            
+            
+            
+            
+        }      
+    }
+    xhr.send();  
+</script>
+</html>
